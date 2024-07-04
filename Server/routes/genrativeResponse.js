@@ -1,6 +1,6 @@
 const { GoogleGenerativeAI} = require('@google/generative-ai');
 const express = require('express');
-const genAI = new GoogleGenerativeAI("AIzaSyADiGbKBtfB5_m4e6VRJGkftcKRvJCgT1o");
+const genAI = new GoogleGenerativeAI("Enter Your api key");
 
 router = express.Router();
 
