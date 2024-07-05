@@ -5,7 +5,7 @@ userData: {
     age: Number,
     Allergies: String,
     PastDiseases: String,
-    bloodGroup: String,
+    currentCondition: String,
 }
 user: {
     fullName: String,
