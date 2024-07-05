@@ -3,12 +3,12 @@
 // users schema
 userData: {
     age: Number,
-    fullname: String,
     Allergies: String,
     PastDiseases: String,
+    bloodGroup: String,
 }
 user: {
-    username: String,
+    fullName: String,
     email: String,
     password: String,
     userData: userData
