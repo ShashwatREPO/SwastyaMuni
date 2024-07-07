@@ -18,7 +18,7 @@ Before you begin, make sure you have the following 💻:
    ```
    or 
    ```bash
-   gh repo clone YourUsername/SwastyaMuni
+   gh repo clone ShashwatREPO/SwastyaMuni
    ```
 2. Create a `.env` file in the root directory of the project. Add your MongoDB connection string and JWT secret key to this file.
 
