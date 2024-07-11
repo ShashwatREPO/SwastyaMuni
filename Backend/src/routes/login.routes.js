@@ -11,12 +11,17 @@ router.post('/', async (req, res, next) => {
             return next(err);
         }
         if (!user) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+            return res.status(401).json({ 
+                valid : false, 
+                message: 'Unauthorized' 
+            });
         req.login(user, { session: false }, async (error) => {
             if (error) return next(error);
             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'your_jwt_secret_here');
-            return res.json({ token });
+            return res.json({
+                valid : true , 
+                token : token 
+            });
         });
     })(req, res, next);
 });
