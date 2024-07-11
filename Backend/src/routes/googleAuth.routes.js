@@ -9,7 +9,10 @@ router.get('/', passportGoogle.authenticate('google', { scope: ['profile', 'emai
 
 router.get('/callback', passportGoogle.authenticate('google', { session: false, failureRedirect: '/login' }), (req, res) => {
     const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET || 'your_jwt_secret_here');
-    res.json({token}); 
+    res.json({
+        valid : true, 
+        token : token
+    }); 
 });
 
 export default router ;
