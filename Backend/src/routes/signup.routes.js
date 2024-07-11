@@ -12,7 +12,10 @@ router.post("/", async (req, res, next) => {
     try {
         let existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "User already exists with this email" });
+            return res.status(400).json({ 
+                valid : false, 
+                message: "User already exists with this email" 
+            });
         }
 
         const newUserData = new UserData({ age : parseInt(age), allergies, pastDisease, currentDisease });
@@ -28,8 +31,11 @@ router.post("/", async (req, res, next) => {
         });
         await newUser.save();
 
-        const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET || "your_jwt_secret_here");
-        res.status(201).json({ token });
+       const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET || "your_jwt_secret_here");
+        res.status(201).json({
+            valid : true,  
+            token : token 
+        });
     } catch (error) {
         console.error("Signup failed:", error);
 
