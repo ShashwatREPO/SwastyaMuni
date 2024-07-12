@@ -16,7 +16,7 @@ export default function ChatSpace() {
       lastElement.scrollIntoView({
         behavior: "smooth",
         block: "end",
-        inline: "nearest"
+        inline: "nearest",
       });
     }
   };
@@ -87,7 +87,11 @@ export default function ChatSpace() {
       )}
 
       <div className="w-screen z-50 h-20 bottom-0 fixed bg-backgroundGreen">
-        <ChatField inputChat={setCombinedChat} setSpinnerStatus={setSpinnerStatus} spinnerStatus={spinnerStatus} />
+        <ChatField
+          inputChat={setCombinedChat}
+          setSpinnerStatus={setSpinnerStatus}
+          spinnerStatus={spinnerStatus}
+        />
       </div>
     </div>
   );
