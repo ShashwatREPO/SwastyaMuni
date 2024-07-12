@@ -4,7 +4,7 @@ export default function Linkbtn({ text="lorem ipsum", link = "is mipsum", onclic
   return (
     <p className="font-poppins text-sm flex gap-1">
       {text}
-      <spam className="text-accentGreen hover:cursor-pointer " onClick={onclick}>{link}</spam>
+      <span className="text-accentGreen hover:cursor-pointer " onClick={onclick}>{link}</span>
     </p>
   );
 }
