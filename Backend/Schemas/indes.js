@@ -25,6 +25,7 @@ const loginSchema = zod.object({
     password: zod.string()
 });
 
+
 module.exports = {
     userSchema,
     loginSchema,
