@@ -12,9 +12,7 @@ export const RegisterUser = async ({
       email,
       password,
     });
-    if (res.data.validation == true) {
-      localStorage.setItem("token", res.data.token);
-    }
+    localStorage.setItem("token", res.data.token);
     console.log("registeration Done");
     navigation("/home");
   } catch (e) {
