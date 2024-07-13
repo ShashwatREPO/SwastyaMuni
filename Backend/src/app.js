@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
     res.send("heyyaaaa");
 });
 
-app.post("/protected", async (req, res) => {
+app.post("/protected", authenticateJwt, async (req, res) => {
     try {
         const query = req.body.query;
         const response = await axios.post('http://127.0.0.1:8000/generate', { query });
