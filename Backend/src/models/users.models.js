@@ -23,6 +23,12 @@ const UserSchema = new Schema(
         }, 
         profile : {
             type : String, 
+        }, 
+        otp : {
+            type : Number
+        }, 
+        otpExpires : {
+            type : Number
         }
     },{timestamps : true}
 ); 

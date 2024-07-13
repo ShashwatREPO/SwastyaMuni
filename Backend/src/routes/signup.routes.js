@@ -7,8 +7,7 @@ import bcrypt from "bcrypt";
 const router = express.Router(); 
 
 router.post("/", async (req, res, next) => {
-    const { fullName, email, password, age, allergies, pastDisease, currentDisease } = req.body;
-    let newUser ; 
+    const { fullName, email, password} = req.body;
     try {
         let existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -18,16 +17,14 @@ router.post("/", async (req, res, next) => {
             });
         }
 
-        const newUserData = new UserData({ age : parseInt(age), allergies, pastDisease, currentDisease });
-        await newUserData.save();
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        newUser = new User({
+        const newUser = new User({
             fullName,
             email,
             password : hashedPassword,
-            userData: newUserData._id
+            otp : Math.random(), 
+            otpExpires : Date.now()
         });
         await newUser.save();
 
