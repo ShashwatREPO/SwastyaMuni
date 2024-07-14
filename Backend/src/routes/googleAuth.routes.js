@@ -1,18 +1,27 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import passportGoogle from "../middlewares/passportGooglAuthConfig.middleware.js"; 
+import passportGoogle from "../middlewares/passportGooglAuthConfig.middleware.js";
 
+const router = express.Router();
 
-const router = express.Router(); 
+router.get(
+  "/",
+  passportGoogle.authenticate("google", { scope: ["profile", "email"] })
+);
 
-router.get('/', passportGoogle.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
+  "/callback",
+  passportGoogle.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:5173/login",
+  }),
+  (req, res) => {
+    const token = jwt.sign(
+      { id: req.user.id },
+      process.env.JWT_SECRET || "your_jwt_secret_here"
+    );
+    res.redirect(`http://localhost:5173/login?token=${token}`);
+  }
+);
 
-router.get('/callback', passportGoogle.authenticate('google', { session: false, failureRedirect: '/login' }), (req, res) => {
-    const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET || 'your_jwt_secret_here');
-    res.json({
-        valid : true, 
-        token : token
-    }); 
-});
-
-export default router ;
+export default router;

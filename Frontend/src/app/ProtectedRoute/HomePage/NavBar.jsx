@@ -1,10 +1,20 @@
 import React, { useRef, useState } from "react";
 import LogoSvg from "../../../components/LogoSvg";
 import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [ShowDetails, SetShowDetails] = useState(false);
+  const navigation = useNavigate();
   const infoRef = useRef(null);
+
+
+
+  const handelLogout = ()=>{
+    localStorage.removeItem("token");
+    navigation("/login");
+
+  }
 
   return (
     <div className="flex justify-between py-2 relative z-50 px-4 items-center">
@@ -19,7 +29,7 @@ export default function NavBar() {
             </span>
           </p>
         </div>
-        <LogOut className="size-5" />
+        <LogOut className="size-5" onClick={handelLogout} />
       </div>
 
       <div className="relative lg:hidden md:hidden">
