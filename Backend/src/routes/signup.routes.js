@@ -17,6 +17,8 @@ router.post("/", async (req, res, next) => {
             });
         }
 
+        if (!password) return res.status(501).json({ message: "password not found" });
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
