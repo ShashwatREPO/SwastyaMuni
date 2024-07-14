@@ -13,7 +13,7 @@ This repository contains a FastAPI server for handling Ayurvedic health advice q
 
 2. **Create and activate a virtual environment (optional but recommended):**
    ```bash
-   conda create --name kerbal python=3.8   # Create a new virtual environment (optional)
+   conda create --name kerbal python=3.10   # Create a new virtual environment (optional)
    conda activate kerbal                   # Activate the virtual environment
    ```
 

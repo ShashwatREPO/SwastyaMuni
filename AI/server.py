@@ -79,7 +79,7 @@ def generate_response(prompt):
     return answer.text
 
 
-db = load_chroma_collection(path="./RAG/contents", name="rag_experiment")
+db = load_chroma_collection(path="./RAG/contents2", name="rag_experiment2")
 
 
 class QueryModel(BaseModel):
