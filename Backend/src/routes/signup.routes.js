@@ -1,10 +1,10 @@
-import express from "express"; 
+import express from "express";
 import { User } from "../models/users.models.js";
 import { UserData } from "../models/userData.models.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcrypt";
 
-const router = express.Router(); 
+const router = express.Router();
 
 router.post("/", async (req, res, next) => {
     const { fullName, email, password} = req.body;
@@ -43,8 +43,11 @@ router.post("/", async (req, res, next) => {
         }
         
         res.status(500).json({ message: "Signup failed" });
+
     }
+
+    res.status(500).json({ message: "Signup failed" });
+  }
 });
 
-
-export default router ; 
+export default router;
