@@ -20,10 +20,7 @@ const UserSchema = new Schema(
         userData : {
             type : Schema.Types.ObjectId, 
             ref : "UserData"
-        }, 
-        profile : {
-            type : String, 
-        }, 
+        },
         otp : {
             type : Number
         }, 

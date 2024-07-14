@@ -4,8 +4,7 @@ import passport from "passport";
 import authRoutes from "./routes/auth.routes.js";
 import passportGoogle from "./middlewares/passportGooglAuthConfig.middleware.js";
 import { authenticateJwt } from "./middlewares/passportJWT.middleware.js";
-import axios from "axios";
-
+import protectedRoute from "./routes/protected.routes.js"
 
 const app = express();
 
@@ -28,17 +27,6 @@ app.get('/', async (req, res) => {
     res.send("heyyaaaa");
 });
 
-app.post("/protected", authenticateJwt, async (req, res) => {
-    try {
-        const query = req.body.query;
-        const response = await axios.post('http://127.0.0.1:8000/generate', { query });
+app.use("/protected", authenticateJwt, protectedRoute );
 
-        const result = response.answer;
-
-        res.status(200).json({ result });
-    } catch (error) {
-        console.error('Error making POST request:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
 export default app; 
