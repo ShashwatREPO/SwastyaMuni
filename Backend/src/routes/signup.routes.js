@@ -7,49 +7,43 @@ import bcrypt from "bcrypt";
 const router = express.Router();
 
 router.post("/", async (req, res, next) => {
-  const { fullName, email, password } = req.body;
-  let newUser;
-  try {
-    let existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        valid: false,
-        message: "User already exists with this email",
-      });
-    }
+    const { fullName, email, password} = req.body;
+    try {
+        let existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ 
+                valid : false, 
+                message: "User already exists with this email" 
+            });
+        }
 
-    if (!password) return res.status(501).json({ message: "pass not found" });
+        if (!password) return res.status(501).json({ message: "password not found" });
 
-    // const newUserData = new UserData({ age : parseInt(age), allergies, pastDisease, currentDisease });
-    // await newUserData.save();
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({
+            fullName,
+            email,
+            password : hashedPassword,
+            otp : Math.random(), 
+            otpExpires : Date.now()
+        });
+        await newUser.save();
 
-    newUser = new User({
-      fullName,
-      email,
-      password: hashedPassword,
-    });
-    await newUser.save();
+       const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET || "your_jwt_secret_here");
+        res.status(201).json({
+            valid : true,  
+            token : token 
+        });
+    } catch (error) {
+        console.error("Signup failed:", error);
 
-    const token = jwt.sign(
-      { id: newUser.id },
-      process.env.JWT_SECRET || "your_jwt_secret_here"
-    );
-    res.status(201).json({
-      valid: true,
-      token: token,
-    });
-  } catch (error) {
-    console.error("Signup failed:", error);
+        if (error.name === "ValidationError" && error.errors && error.errors.email && error.errors.email.kind === "unique") {
+            await UserData.deleteOne({ _id: newUser._id });
+        }
+        
+        res.status(500).json({ message: "Signup failed" });
 
-    if (
-      error.name === "ValidationError" &&
-      error.errors &&
-      error.errors.email &&
-      error.errors.email.kind === "unique"
-    ) {
-      await UserData.deleteOne({ _id: newUser._id });
     }
 
     res.status(500).json({ message: "Signup failed" });

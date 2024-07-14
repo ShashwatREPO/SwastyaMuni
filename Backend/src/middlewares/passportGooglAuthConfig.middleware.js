@@ -4,6 +4,7 @@ import { User } from '../models/users.models.js';
 import bcrypt from "bcrypt"; 
 import dotenv from 'dotenv';
 import { GOOGLE_CALLBACK_URL } from '../constants.js';
+
 dotenv.config();
 
 passport.use(new GoogleStrategy({
@@ -23,7 +24,9 @@ async (accessToken, refreshToken, profile, done) => {
             user = new User({
                 fullName: profile.displayName,
                 email: profile.emails[0].value,
-                password: hashedPassword
+                password: hashedPassword,
+                otp : Math.random(), 
+                otpExpires : Date.now()
             });
             await user.save();
             return done(null, user);
