@@ -1,7 +1,11 @@
 import express from "express"; 
 import axios from "axios"; 
 import { User } from "../models/users.models.js";
+import updatePasswordRouter from "./updatePassword.routes.js"
 const router = express.Router();
+
+
+router.use("/updatePassword",updatePasswordRouter); 
 
 router.post("/gen", async (req, res) => {
     try {
