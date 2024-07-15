@@ -13,28 +13,41 @@ export default function LoginForm() {
   const navigation = useNavigate();
 
   const handelClick = () => {
-    login({ email, password , navigation });
+    login({ email, password, navigation });
   };
 
   return (
-    <div className="flex flex-col w-full items-center gap-6">
+    <div className="flex flex-col w-full items-center gap-5">
       <LogoSvg />
-      <div className="flex flex-col gap-4">
-        <FormField
-          text="Email address"
-          placeholder="Email Address"
-          onchange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <FormField
-          text="Password"
-          placeholder="Password"
-          password={true}
-          onchange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+      <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-4">
+          <FormField
+            text="Email address"
+            placeholder="Email Address"
+            onchange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <FormField
+            text="Password"
+            placeholder="Password"
+            password={true}
+            onchange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="flex w-full font-poppins text-sm justify-end">
+          <h1
+            className="hover:cursor-pointer opacity-55"
+            onClick={() => {
+              navigation("/reset-password/");
+            }}
+          >
+            Forget Password?
+          </h1>
+        </div>
       </div>
 
       <div className="flex flex-col gap-5 ">
