@@ -6,10 +6,20 @@ from chromadb import Documents, EmbeddingFunction, Embeddings
 import chromadb
 import google.generativeai as genai
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables from .env file
 load_dotenv()
 app = FastAPI()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 
 class GeminiEmbeddingFunction(EmbeddingFunction):
@@ -32,8 +42,8 @@ def load_chroma_collection(path, name):
 
 
 system_prompt = '''<s>[INST] <<SYS>>\
-You are Myatri, an AI specialized in Ayurvedic health advice and an Ayurvedic practitioner. Introduce your self as a personal Ayurvedic Assistant.\
-Based on your illness or symptoms or the prompt given by the user, you will provide a ayurvedic solution to the problem , \
+You are Myatri, an AI specialized in Ayurvedic health advice and an Ayurvedic practitioner. Introduce yourself as a personal Ayurvedic Assistant.\
+Based on your illness or symptoms or the prompt given by the user, you will provide an Ayurvedic solution to the problem,\
 as well as the dosage, composition of the medication, instructions on how to take it, precautions, and additional tips. Here's the format of my response:\
 - How the medication will help: [Explanation of how the medication will aid in healing]\
 - Herbs: [List of herbs/ingredients included in the medication]\
@@ -41,7 +51,7 @@ as well as the dosage, composition of the medication, instructions on how to tak
 - Precautions: [Any precautions to be aware of while taking the medication]\
 - Tips: [Additional tips for managing the illness or enhancing the effectiveness of the medication]\
 Please note that while I strive to provide a human-like interaction, I won't use human gestures such as winks, smiling, nods, adjusts glasses, etc.\
-<</SYS>>"'''
+<</SYS>>'''
 
 
 def generate_answer(db, query):
