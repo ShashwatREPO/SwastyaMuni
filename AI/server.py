@@ -36,7 +36,7 @@ You are Myatri, an AI specialized in Ayurvedic health advice and an Ayurvedic pr
 Based on your illness or symptoms or the prompt given by the user, you will provide a ayurvedic solution to the problem , \
 as well as the dosage, composition of the medication, instructions on how to take it, precautions, and additional tips. Here's the format of my response:\
 - How the medication will help: [Explanation of how the medication will aid in healing]\
-- Herbs: [List of herbs/ingridents included in the medication]\
+- Herbs: [List of herbs/ingredients included in the medication]\
 - How to make the medicine at home: [Instructions on how to prepare the medicine with precise measurements]\
 - Precautions: [Any precautions to be aware of while taking the medication]\
 - Tips: [Additional tips for managing the illness or enhancing the effectiveness of the medication]\
@@ -79,17 +79,28 @@ def generate_response(prompt):
     return answer.text
 
 
-db = load_chroma_collection(path="./RAG/contents", name="rag_experiment")
+db = load_chroma_collection(path="./RAG/contents2", name="rag_experiment2")
 
 
 class QueryModel(BaseModel):
     query: str
+    password: str
+
+
+@app.get("/")
+async def root():
+    return {
+        "message": "Welcome to SwastyaMuni",
+        "description": "This is the AI Backend for Ayurvedic health advice. Use the /generate endpoint to get personalized Ayurvedic solutions."
+    }
 
 
 @app.post("/generate")
-async def get_ayurveda_solution(query: QueryModel):
+async def get_ayurveda_solution(request: QueryModel):
+    if request.password != os.getenv("API_PASSWORD"):
+        raise HTTPException(status_code=403, detail=f"Invalid password")
     try:
-        answer = generate_answer(db, query.query)
+        answer = generate_answer(db, request.query)
         return {"answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
