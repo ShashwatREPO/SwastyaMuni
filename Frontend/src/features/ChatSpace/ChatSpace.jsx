@@ -78,9 +78,9 @@ export default function ChatSpace() {
         >
           {CombinedChat.map((chat, index) => {
             if (index % 2 == 0) {
-              return <UserChatBubble text={chat} />;
+              return <UserChatBubble key={index} text={chat} />;
             } else {
-              return <GemniResponseChat markdown={chat} />;
+              return <GemniResponseChat key={index} markdown={chat} />;
             }
           })}
         </div>
