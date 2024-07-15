@@ -22,7 +22,10 @@ router.post("/gen", async (req, res) => {
 });
 
 router.post("/userInfo", async (req,res)=>{
-    res.send({Name : req.user.fullName}).status(200); 
+    res.send({
+        Name : req.user.fullName,
+        Email : req.user.email
+    }).status(200); 
 }); 
 
 export default router; 
