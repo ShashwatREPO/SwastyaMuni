@@ -84,7 +84,7 @@ db = load_chroma_collection(path="./RAG/contents2", name="rag_experiment2")
 
 class QueryModel(BaseModel):
     query: str
-    password: str
+    # password: str
 
 
 @app.get("/")
@@ -97,8 +97,8 @@ async def root():
 
 @app.post("/generate")
 async def get_ayurveda_solution(request: QueryModel):
-    if request.password != os.getenv("API_PASSWORD"):
-        raise HTTPException(status_code=403, detail=f"Invalid password")
+    # if request.password != os.getenv("API_PASSWORD"):
+    #     raise HTTPException(status_code=403, detail=f"Invalid password")
     try:
         answer = generate_answer(db, request.query)
         return {"answer": answer}
