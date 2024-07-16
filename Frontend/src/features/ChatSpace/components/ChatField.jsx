@@ -2,7 +2,11 @@ import { LoaderCircle, SendHorizonal } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { getGemniResponse } from "../Api/chatApi";
 
-export default function ChatField({ inputChat , setSpinnerStatus , spinnerStatus }) {
+export default function ChatField({
+  inputChat,
+  setSpinnerStatus,
+  spinnerStatus,
+}) {
   const inputRef = useRef();
   const [currentWidth, setCurrentWidth] = useState();
 
@@ -34,12 +38,12 @@ export default function ChatField({ inputChat , setSpinnerStatus , spinnerStatus
     }
   };
 
-  const handleKeyDown = (e)=>{
-    if(e.key == "Enter"){
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
       e.preventDefault();
       handleInput();
     }
-  }
+  };
 
   useEffect(() => {
     updateWidth();
@@ -62,7 +66,7 @@ export default function ChatField({ inputChat , setSpinnerStatus , spinnerStatus
         )}
       </div>
 
-      <div className="bg-accentGreen rounded-full flex-shrink-0 size-8 lg:hidden md:hidden transform -translate-y-2 "></div>
+      {/* <div className="bg-accentGreen rounded-full flex-shrink-0 size-8 lg:hidden md:hidden transform -translate-y-2 "></div> */}
     </div>
   );
 }
