@@ -33,7 +33,7 @@ export default function PasswordReset() {
         <div
           className="px-4 py-1 bg-accentGreen rounded-sm text-white"
           onClick={() => {
-            navigate("verify-otp");
+            navigate("verify-otp", { state: { email: email } });
           }}
         >
           Send OTP
