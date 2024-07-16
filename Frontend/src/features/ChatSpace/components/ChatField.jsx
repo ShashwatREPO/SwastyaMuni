@@ -34,6 +34,13 @@ export default function ChatField({ inputChat , setSpinnerStatus , spinnerStatus
     }
   };
 
+  const handleKeyDown = (e)=>{
+    if(e.key == "Enter"){
+      e.preventDefault();
+      handleInput();
+    }
+  }
+
   useEffect(() => {
     updateWidth();
   }, []);
@@ -46,6 +53,7 @@ export default function ChatField({ inputChat , setSpinnerStatus , spinnerStatus
           className={` max-h-36 overflow-y-auto w-full border-transparent  focus:ring-0 focus:outline-0 empty:text-gray-400 empty:before:content-['Ask_Query']`}
           style={{ maxWidth: currentWidth }}
           contentEditable
+          onKeyDown={handleKeyDown}
         ></div>
         {spinnerStatus ? (
           <LoaderCircle className="size-6 animate-spin" />

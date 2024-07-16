@@ -12,7 +12,8 @@ router.post("/gen", async (req, res) => {
         const query = req.body.query;
         const response = await axios.post('http://127.0.0.1:8000/generate', { query });
 
-        const result = response.answer;
+        const result = await response.data.answer;
+        console.log(result);
 
         res.status(200).json({ result });
     } catch (error) {
