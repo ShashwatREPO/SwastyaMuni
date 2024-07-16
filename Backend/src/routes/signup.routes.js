@@ -46,7 +46,6 @@ router.post("/", async (req, res, next) => {
 
     }
 
-    res.status(500).json({ message: "Signup failed" });
   }
 );
 
