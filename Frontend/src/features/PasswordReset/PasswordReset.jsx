@@ -3,19 +3,24 @@ import LogoSvg from "../../components/LogoSvg";
 import { useNavigate } from "react-router-dom";
 
 export default function PasswordReset() {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-6 items-center font-poppins mb-20">
       <LogoSvg />
       <div className="flex flex-col gap-1">
-        <h1 className=" text-3xl text-DarkGreen">Reset Your Password</h1>
-        <h4 className="text-base opacity-75">
+        <h1 className=" text-3xl text-DarkGreen font-bold">
+          Reset Your Password
+        </h1>
+        <h4 className="text-base opacity-60">
           Enter the email you used during login
         </h4>
       </div>
 
       <input
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
         className="px-4 w-full py-2 border-DarkGreen border-2 border-opacity-10 rounded-md placeholder:text-DarkGreen placeholder:text-opacity-20 focus:ring-0 focus:outline-none "
         placeholder="Email Address"
       ></input>
@@ -31,9 +36,11 @@ export default function PasswordReset() {
         </div>
 
         <div
-          className="px-4 py-1 bg-accentGreen rounded-sm text-white"
+          className="px-4 py-1 bg-accentGreen hover:cursor-pointer rounded-sm text-white"
           onClick={() => {
-            navigate("verify-otp", { state: { email: email } });
+            if (email != "") {
+              navigate("verify-otp", { state: { email: email } });
+            }
           }}
         >
           Send OTP

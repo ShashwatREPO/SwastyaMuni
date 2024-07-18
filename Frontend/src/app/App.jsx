@@ -12,6 +12,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import HomePage from "./ProtectedRoute/HomePage/HomePage";
 import PasswordResetPage from "./PasswordResetPage/PasswordResetPage";
 import PasswordReset from "../features/PasswordReset/PasswordReset";
+import VerifyOTPPage from "../features/PasswordReset/Pages/VerifyOTPPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,7 +22,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="reset-password" element={<PasswordResetPage />}>
           <Route index element={<PasswordReset />} />
-          <Route path="verify-otp" element={<></>} />
+          <Route path="verify-otp" element={<VerifyOTPPage />} />
           <Route path="new-password" element={<></>} />
         </Route>
         <Route element={<ProtectedRoute />}>
