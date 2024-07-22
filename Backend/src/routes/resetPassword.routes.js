@@ -4,15 +4,22 @@ import { User } from "../models/users.models.js";
 
 const router = express.Router();
 
+
 router.post("/", async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user || user.otp != otp || Date.now() > user.otpExpires) {
+    if(!otp){
+      return res.status(200).json({"status" : "OK"}); 
+    }
+    if (user.otp != otp || Date.now() > user.otpExpires) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
+    if(!newPassword){
+      return res.status(200).json({"status" : "OK"}); 
+    }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     user.password = hashedPassword;
