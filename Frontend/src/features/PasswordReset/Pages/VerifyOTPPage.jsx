@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LogoSvg from "../../../components/LogoSvg";
+import { OtpBeforePass } from "../Api/OtpBeforePass";
 
 export default function VerifyOTPPage({ length = 4 }) {
   const { state } = useLocation();
   const { email } = state;
   const [otp, setOtp] = useState(new Array(length).fill(""));
+  const navigator = useNavigate();
   const [FinalOtp, setFinal] = useState("");
   const inputRef = useRef([]);
 
@@ -14,6 +16,14 @@ export default function VerifyOTPPage({ length = 4 }) {
       inputRef.current[0].focus();
     }
   }, []);
+
+  useEffect(() => {
+    const CombinedOtp = otp.join("");
+    if (CombinedOtp.length === length) {
+      setFinal(CombinedOtp);
+      console.log(FinalOtp);
+    }
+  }, [otp]);
 
   const handleChange = (index, e) => {
     const value = e.target.value;
@@ -24,17 +34,17 @@ export default function VerifyOTPPage({ length = 4 }) {
     newOtp[index] = value.substring(value.length - 1);
     setOtp(newOtp);
 
-    const CombinedOtp = newOtp.join("");
-    if (CombinedOtp.length === length) {
-      FinalOtp(CombinedOtp);
-    }
-
     if (value && index < length - 1 && inputRef.current[index + 1]) {
       inputRef.current[index + 1].focus();
     }
   };
 
-  const onSubmitOtp = () => {};
+  const onSubmitOtp = async () => {
+    const bool = await OtpBeforePass({ email, FinalOtp });
+    if (bool == true) {
+      navigator("/reset-password/new-password", { state: { email: email, otp: FinalOtp } });
+    }
+  };
 
   const handleKeyDown = (index, e) => {
     if (
@@ -94,7 +104,10 @@ export default function VerifyOTPPage({ length = 4 }) {
         <h1 className="text-accentGreen hover:cursor-pointer">Resend OTP</h1>
       </div>
 
-      <button className="flex-grow bg-accentGreen w-full text-white font-poppins rounded-sm h-10">
+      <button
+        className="flex-grow bg-accentGreen w-full text-white font-poppins rounded-sm h-10"
+        onClick={onSubmitOtp}
+      >
         Verify OTP
       </button>
     </div>

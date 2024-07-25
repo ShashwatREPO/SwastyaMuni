@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if(!otp){
-      return res.status(200).json({"status" : "OK"}); 
+      return res.status(400).json({"status" : "OK"}); 
     }
     if (user.otp != otp || Date.now() > user.otpExpires) {
       return res.status(400).json({ message: "Invalid or expired OTP" });

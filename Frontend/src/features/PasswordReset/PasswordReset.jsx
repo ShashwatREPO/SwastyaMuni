@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import LogoSvg from "../../components/LogoSvg";
 import { useNavigate } from "react-router-dom";
+import { EmailToSendOtp } from "./Api/EmailToSendOtp";
 
 export default function PasswordReset() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const handleClick = async () => {
+    const bool = await EmailToSendOtp({ email });
+    if (bool == true) {
+      navigate("verify-otp", { state: { email: email } });
+    } else {
+      console.log("not valid");
+    }
+  };
   return (
     <div className="flex flex-col gap-6 items-center font-poppins mb-20">
       <LogoSvg />
@@ -37,11 +46,7 @@ export default function PasswordReset() {
 
         <div
           className="px-4 py-1 bg-accentGreen hover:cursor-pointer rounded-sm text-white"
-          onClick={() => {
-            if (email != "") {
-              navigate("verify-otp", { state: { email: email } });
-            }
-          }}
+          onClick={handleClick}
         >
           Send OTP
         </div>
