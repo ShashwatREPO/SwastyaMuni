@@ -39,7 +39,7 @@ Before you begin, make sure you have the following 💻:
 ### User Routes
 
 1. **User Signup**: Route to create users for the first time.
-   - Route: `http://localhost:3000/user/signup`
+   - Route: `http://localhost:3000/auth/signup`
    - Method: `POST`
    - Request Body:
      ```json
@@ -52,13 +52,13 @@ Before you begin, make sure you have the following 💻:
    - Response:
      ```json
      {
-         "message": "User created successfully",
-         "_id": "60d0fe4f5311236168a109ca"
+        "valid" : "true", 
+        "token" : "123123123token" 
      }
      ```
 
 2. **User Login**: Route to login users.
-   - Route: `http://localhost:3000/user/login`
+   - Route: `http://localhost:3000/auth/login`
    - Method: `POST`
    - Request Body:
      ```json
@@ -70,26 +70,141 @@ Before you begin, make sure you have the following 💻:
    - Response:
      ```json
      {
-         "msg": "Login successful"
+        "valid" : "true", 
+        "token" : "123123123token" 
      }
      ```
 
-3. **Add User Data**: Route to add additional user data.
-   - Route: `http://localhost:3000/user/addData`
+3. **Forgot Password**: Route to Send an email to recover password.
+   - Route: `http://localhost:3000/auth/forgotPassword`
    - Method: `POST`
    - Request Body:
      ```json
      {
-         "age": 30,
-         "allergies": "None",
-         "pastDiseases": "None",
-         "currentCondition": "Healthy"
+        "email": "john@example.com"
      }
      ```
    - Response:
      ```json
      {
-         "msg": "User data added successfully"
+        "message" : "OTP sent to your email"  
+     }
+     ```
+4. **Reset Password** : Password to reset using OTP . 
+   - Route: `http://localhost:3000/auth/resetPassword`
+   - Method: `POST`
+   - Request Body:
+    To check Email :- 
+     ```json
+     {
+        "email": "john@example.com"
+     }
+     ```
+   - Response:
+     ```json
+     {
+        "status" : "OK" 
+     }
+     ```
+
+     To verify Email :- 
+      ```json
+     {
+        "email": "john@example.com", 
+        "otp" : "****"
+     }
+     ```
+   - Response:
+     ```json
+     {
+        "status" : "OK" 
+     }
+     ```
+     To Update password:- 
+      ```json
+     {
+        "email": "john@example.com", 
+        "otp" : "****",
+        "newPassword" : "****#****"
+     }
+     ```
+   - Response:
+     ```json
+     {
+        "status" : "OK" 
+     }
+     ```
+5. **Update Password** : To Change Password . 
+   - Route: `http://localhost:3000/protected/updatePassword`
+   - Method: `POST`
+   - Reaquest Header: 
+   ```
+    Authorization: Bearer <your_jwt_token>
+    ```
+   - Request Body:
+     ```json
+     {
+        "email": "john@example.com",
+        "password": "****#*****", 
+        "newPassword" : "****#****"
+     }
+     ```
+   - Response:
+     ```json
+     {
+        "message" : "Password! Updated Successfully."
+     }
+     ```
+6. **Add User Data** : To Add User Data . 
+   - Route: `http://localhost:3000/protected/addUserData`
+   - Method: `POST`
+   - Reaquest Header: 
+   ```
+    Authorization: Bearer <your_jwt_token>
+    ```
+   - Request Body:
+     ```json
+     {
+        "age": "userAge(*)",
+        "allergies" : "Insert_Your_Allergies_If_You_have", 
+        "pastDisease" : "Insert_Your_pastDisease_If_You_have", 
+        "currentDisease" : "Insert_What_Disease_You_are_Suffering_from"
+     }
+     ```
+   - Response:
+     ```json
+     {
+        "message" : "done"
+     }
+     ```
+7. **Get User Data** : To Get User Data  . 
+   - Route: `http://localhost:3000/protected/getUserData`
+   - Method: `POST`
+   - Reaquest Header: 
+   ```
+    Authorization: Bearer <your_jwt_token>
+    ```
+   - Response:
+     ```json
+     {
+        "age" : "*", 
+        "allergies" : "Past_Allergies", 
+        "pastDisease" : "Past_Disease", 
+        "currentDisease" : "Current_Disease"
+     }
+     ```
+7. **Get User Info** : To Get User Info Such as email . 
+   - Route: `http://localhost:3000/protected/userInfo`
+   - Method: `POST`
+   - Reaquest Header: 
+   ```
+    Authorization: Bearer <your_jwt_token>
+    ```
+   - Response:
+     ```json
+     {
+        "Name" : "fullName",
+        "Email" : "email"
      }
      ```
 
