@@ -23,9 +23,6 @@ import "./middlewares/passportJWTconfig.middleware.js"
 
 app.use("/auth", authRoutes);
 
-app.get('/', async (req, res) => {
-    res.send("heyyaaaa");
-});
 
 app.use("/protected", authenticateJwt, protectedRoute );
 
