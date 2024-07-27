@@ -94,33 +94,33 @@ Before you begin, make sure you have the following 💻:
    - Route: `http://localhost:3000/auth/resetPassword`
    - Method: `POST`
    - Request Body:
-   - To check Email :- 
+    To check Email :- 
      ```json
      {
         "email": "john@example.com"
      }
      ```
-    Response:
+   - Response:
      ```json
      {
         "status" : "OK" 
      }
      ```
 
-    - To verify Email :- 
+     To verify Email :- 
       ```json
      {
         "email": "john@example.com", 
         "otp" : "****"
      }
      ```
-    Response:
+   - Response:
      ```json
      {
         "status" : "OK" 
      }
      ```
-    - To Update password:- 
+     To Update password:- 
       ```json
      {
         "email": "john@example.com", 
@@ -128,7 +128,7 @@ Before you begin, make sure you have the following 💻:
         "newPassword" : "****#****"
      }
      ```
-     Response:
+   - Response:
      ```json
      {
         "status" : "OK" 
